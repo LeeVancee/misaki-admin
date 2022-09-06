@@ -16,32 +16,35 @@
             <el-col></el-col>
           </el-row>
         </el-header>
-        <el-main>Main</el-main>
+        <el-main>
+          <AppMain />
+        </el-main>
       </el-container>
     </el-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import logoBar from "./components/logoBar/index.vue";
-import menuBar from "./components/menuBar/index.vue";
-import { Expand, Fold } from "@element-plus/icons-vue";
-import { isMobile } from "../untils/isMobile";
+import { ref, computed } from 'vue'
+import logoBar from './components/logoBar/index.vue'
+import menuBar from './components/menuBar/index.vue'
+import AppMain from './components/appMain/AppMain.vue'
+import { Expand, Fold } from '@element-plus/icons-vue'
+import { isMobile } from '../untils/isMobile'
 
-const collapsed = ref(false);
+const collapsed = ref(false)
 const click = () => {
-  collapsed.value = !collapsed.value;
-};
+  collapsed.value = !collapsed.value
+}
 const autoWidth = computed(() => {
   if (collapsed.value && isMobile()) {
-    return "0px";
+    return '0px'
   } else if (collapsed.value) {
-    return "64px";
+    return '64px'
   } else {
-    return "200px";
+    return '200px'
   }
-});
+})
 </script>
 
 <style lang="scss">

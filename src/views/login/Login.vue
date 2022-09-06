@@ -1,65 +1,65 @@
 <script setup lang="ts">
-import { User, Lock } from '@element-plus/icons-vue';
+import { User, Lock } from '@element-plus/icons-vue'
 //import {getCode} from '../../api/Auth'
-import { ref, reactive, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, reactive, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
+const router = useRouter()
 
-const loginFormRef = ref(null);
+const loginFormRef = ref(null)
 
 const loginForm = reactive({
   username: '',
   password: '',
-  verifyCode: '',
-});
+  verifyCode: ''
+})
 
-const codeUrl = ref<string>();
+const codeUrl = ref<string>()
 
 const loginRules = reactive({
   username: [
     {
       required: true,
       message: '请输入username',
-      trigger: 'blur',
+      trigger: 'blur'
     },
     {
       pattern: /^[a-zA_Z0-9]{2,10}$/,
       message: '请输入2到10位数字或字母',
-      trigger: 'blur',
+      trigger: 'blur'
     },
     {
       min: 3,
       max: 15,
       message: 'Length should be 3 to 15',
-      trigger: 'blur',
-    },
+      trigger: 'blur'
+    }
   ],
 
   password: [
     {
       required: true,
       message: '请输入password',
-      trigger: 'blur',
+      trigger: 'blur'
     },
     { whitespace: true, message: '不能为全空格', trigger: 'blur' },
     {
       min: 3,
       max: 10,
       message: 'Length should be 3 to 10',
-      trigger: 'blur',
-    },
+      trigger: 'blur'
+    }
   ],
 
   verifyCode: [
     {
       required: true,
       message: '请输入验证码',
-      trigger: 'blur',
+      trigger: 'blur'
     },
-    { whitespace: true, message: '不能为全空格', trigger: 'blur' },
-  ],
-});
+    { whitespace: true, message: '不能为全空格', trigger: 'blur' }
+  ]
+})
 // 获取验证码
 /* const getValidCode = () =>{
 
@@ -79,8 +79,8 @@ const loginRules = reactive({
 
 // 登录事件
 const handleLogin = () => {
-  router.push('/');
-};
+  router.push('/')
+}
 </script>
 
 <template>
