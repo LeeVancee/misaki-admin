@@ -17,7 +17,7 @@
   </el-tabs>
 </template>
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMainStore } from '@/store'
 import { Itab } from '@/store/type'
@@ -69,6 +69,25 @@ const removeTab = (targetName: string) => {
   }
   mainStore.closeCurrentTab(targetName)
 }
+// 刷新缓存数据
+const refresh = () => {
+  window.addEventListener('beforeunload', () => {
+    sessionStorage.setItem('tabs_routes', JSON.stringify(tabList.value))
+  })
+  let session = sessionStorage.getItem('tabs_routes')
+  if (session) {
+    let tabItem = JSON.parse(session)
+    tabItem.forEach((tab: Itab) => {
+      mainStore.addTab(tab)
+    })
+  }
+}
+onMounted(() => {
+  //初始化页面生成tab
+  addTab()
+  //刷新保存数据
+  refresh()
+})
 </script>
 <style>
 .demo-tabs > .el-tabs__content {
