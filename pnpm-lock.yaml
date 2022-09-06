@@ -5,6 +5,7 @@ specifiers:
   '@types/node': ^17.0.0
   '@vitejs/plugin-vue': ^2.0.0
   element-plus: ^2.2.16
+  pinia: ^2.0.22
   sass: ^1.54.8
   typescript: ^4.4.4
   unplugin-auto-import: ^0.5.11
@@ -18,6 +19,7 @@ specifiers:
 dependencies:
   '@element-plus/icons-vue': registry.npmmirror.com/@element-plus/icons-vue/2.0.9_vue@3.2.38
   element-plus: registry.npmmirror.com/element-plus/2.2.16_vue@3.2.38
+  pinia: registry.npmmirror.com/pinia/2.0.22_pj7ch6rmow6odq73xb5hfvge3q
   sass: registry.npmmirror.com/sass/1.54.8
   vue: registry.npmmirror.com/vue/3.2.38
   vue-router: registry.npmmirror.com/vue-router/4.1.5_vue@3.2.38
@@ -1255,6 +1257,27 @@ packages:
     version: 2.3.1
     engines: {node: '>=8.6'}
 
+  registry.npmmirror.com/pinia/2.0.22_pj7ch6rmow6odq73xb5hfvge3q:
+    resolution: {integrity: sha512-u+b8/BC+tmvo3ACbYO2w5NfxHWFOjvvw9DQnyT0dW8aUMCPRQT5QnfZ5R5W2MzZBMTeZRMQI7V/QFbafmM9QHw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/pinia/-/pinia-2.0.22.tgz}
+    id: registry.npmmirror.com/pinia/2.0.22
+    name: pinia
+    version: 2.0.22
+    peerDependencies:
+      '@vue/composition-api': ^1.4.0
+      typescript: '>=4.4.4'
+      vue: ^2.6.14 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      '@vue/devtools-api': registry.npmmirror.com/@vue/devtools-api/6.2.1
+      typescript: registry.npmmirror.com/typescript/4.8.2
+      vue: registry.npmmirror.com/vue/3.2.38
+      vue-demi: registry.npmmirror.com/vue-demi/0.13.11_vue@3.2.38
+    dev: false
+
   registry.npmmirror.com/postcss/8.4.16:
     resolution: {integrity: sha512-ipHE1XBvKzm5xI7hiHCZJCSugxvsdq2mPnsq5+UF+VHCjiBvtDrlxJfMBToWaP9D5XlgNmcFGqoHmUn0EYEaRQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/postcss/-/postcss-8.4.16.tgz}
     name: postcss
@@ -1515,7 +1538,6 @@ packages:
     version: 4.8.2
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: true
 
   registry.npmmirror.com/unplugin-auto-import/0.5.11_vite@2.9.15:
     resolution: {integrity: sha512-MJ3POLe/IysRHF4yd32FkKDoxqSRoiuIHm89ys67B8FLuz2Pvh9poeqTVe6IhJsNxwv0+GSdFfj5Dpq24lhm4g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/unplugin-auto-import/-/unplugin-auto-import-0.5.11.tgz}

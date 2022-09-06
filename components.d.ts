@@ -23,6 +23,8 @@ declare module 'vue' {
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElTabPane: typeof import('element-plus/es')['ElTabPane']
+    ElTabs: typeof import('element-plus/es')['ElTabs']
     SetupScript: typeof import('./src/components/SetupScript.vue')['default']
     SlotsAttrs: typeof import('./src/components/SlotsAttrs.vue')['default']
   }

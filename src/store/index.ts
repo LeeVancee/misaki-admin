@@ -1,19 +1,32 @@
-import {createStore} from 'vuex'
+import { defineStore } from 'pinia'
+import { Itab } from './type'
 
 interface State {
-    count:number
+  tabsList: Array<Itab>
 }
 
-export const store = createStore<State> ({
-    state() {
-        return {
-            count:0
-        }
-    },
+export const useMainStore = defineStore('main', {
+  state: (): State => ({
+    tabsList: []
+  }),
 
-    mutations:{
-        increment(state) {
-            state.count++
-        }
+  getters: {
+    getAddTab(state: State) {
+      return state.tabsList
     }
+  },
+  actions: {
+    //添加tab
+    addTab(tab: Itab) {
+      const isSome = this.tabsList.some((item) => item.path == tab.path)
+      if (!isSome) {
+        this.tabsList.push(tab)
+      }
+    },
+    // 删除tab
+    closeCurrentTab(targetName: string) {
+      const index = this.tabsList.findIndex((item) => item.path == targetName)
+      this.tabsList.splice(index, 1)
+    }
+  }
 })

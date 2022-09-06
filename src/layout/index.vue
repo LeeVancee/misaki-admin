@@ -17,6 +17,8 @@
           </el-row>
         </el-header>
         <el-main>
+          <!-- tabList -->
+          <tab-bar />
           <AppMain />
         </el-main>
       </el-container>
@@ -30,8 +32,9 @@ import logoBar from './components/logoBar/index.vue'
 import menuBar from './components/menuBar/index.vue'
 import AppMain from './components/appMain/AppMain.vue'
 import { Expand, Fold } from '@element-plus/icons-vue'
-import { isMobile } from '../untils/isMobile'
 import HeaderBar from './components/headerBar/index.vue'
+import TabBar from './tabBar/TabBar.vue'
+import { isMobile } from '../untils/isMobile'
 
 const collapsed = ref(false)
 const click = () => {
@@ -77,11 +80,11 @@ const autoWidth = computed(() => {
     overflow: hidden;
   }
 
-  .el-main {
+  /* .el-main {
     background-color: #e9eef3;
     color: var(--el-text-color-primary);
     text-align: center;
     line-height: 160px;
-  }
+  } */
 }
 </style>
