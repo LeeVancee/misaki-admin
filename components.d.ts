@@ -8,6 +8,8 @@ declare module 'vue' {
     DefineExpose: typeof import('./src/components/DefineExpose.vue')['default']
     DefineProps: typeof import('./src/components/DefineProps.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
+    ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
+    ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']

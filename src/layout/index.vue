@@ -9,10 +9,10 @@
         <el-header>
           <el-row>
             <!-- 侧边栏按钮 -->
-            <el-icon size="26px">
-              <component :is="collapsed ? Expand : Fold" @click="click" />
+            <el-icon size="26px" style="margin-right: 15px" @click="click">
+              <component :is="collapsed ? Expand : Fold" />
             </el-icon>
-
+            <header-bar />
             <el-col></el-col>
           </el-row>
         </el-header>
@@ -31,6 +31,7 @@ import menuBar from './components/menuBar/index.vue'
 import AppMain from './components/appMain/AppMain.vue'
 import { Expand, Fold } from '@element-plus/icons-vue'
 import { isMobile } from '../untils/isMobile'
+import HeaderBar from './components/headerBar/index.vue'
 
 const collapsed = ref(false)
 const click = () => {
