@@ -102,8 +102,10 @@ import { User, Lock } from '@element-plus/icons-vue'
 import { getCode, login } from '../../api/Auth'
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../../store/authStore'
 
 const router = useRouter()
+const authStore = useAuthStore()
 
 const loginFormRef = ref(null)
 
@@ -171,17 +173,22 @@ const getValidCode = () => {
 // 初始化
 onMounted(() => {
   getValidCode()
+  handleToken()
 })
 
 // 登录事件
 const handleLogin = () => {
-  login(loginForm).then((result) => {
-    console.log(result)
+  authStore.login(loginForm)
+  router.push({ path: '/index' })
+}
 
-    if (result.data.token) {
-      router.push({ path: '/index' })
-    }
-  })
+// token登录
+const handleToken = () => {
+  const token = localStorage.getItem('token')
+
+  if (token != null) {
+    authStore.loginByToken(token)
+  }
 }
 </script>
 

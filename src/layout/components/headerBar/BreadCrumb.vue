@@ -15,7 +15,6 @@ import { useRoute, RouteLocationMatched } from 'vue-router'
 const route = useRoute()
 const breadcrumb: Ref<RouteLocationMatched[]> = ref([])
 const getBreadCrumb = () => {
-  console.log(route.matched)
   //过滤路由信息
   let matched = route.matched.filter(
     (item) => item.meta && item.meta.title && item.children.length !== 1

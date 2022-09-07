@@ -1,5 +1,8 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import Layout from '@/layout/index.vue'
+import { loginByToken } from '@/api/Auth'
+import { useAuthStore } from '@/store/authStore'
+//import pinia from '@/store'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -189,5 +192,16 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: routes
 })
-
+/* router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore()
+  const token = localStorage.getItem('token')
+  if (!authStore.token && !token) {
+    if (to.path.startsWith('/login')) {
+      next()
+    } else {
+      console.log('还没登录！')
+      next('/login')
+    }
+  }
+}) */
 export default router
