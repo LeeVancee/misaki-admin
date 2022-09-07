@@ -192,7 +192,7 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: routes
 })
-/* router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
   const token = localStorage.getItem('token')
   if (!authStore.token && !token) {
@@ -202,6 +202,15 @@ const router = createRouter({
       console.log('还没登录！')
       next('/login')
     }
+  } else if (authStore.token && token) {
+    loginByToken(token).then((res) => {
+      console.log(res)
+      if (res.data.status) {
+        next()
+      }
+    })
+  } else {
+    next()
   }
-}) */
+})
 export default router

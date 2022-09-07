@@ -179,7 +179,8 @@ onMounted(() => {
 // 登录事件
 const handleLogin = () => {
   authStore.login(loginForm)
-  router.push({ path: '/index' })
+
+  //router.push({ path: '/index' })
 }
 
 // token登录
