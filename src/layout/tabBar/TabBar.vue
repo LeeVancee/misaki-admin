@@ -30,15 +30,15 @@
 <script lang="ts" setup>
 import { computed, onMounted, Ref, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useMainStore } from '@/store'
+import { useTabStore } from '@/store/tabStore'
 import { Itab } from '@/store/type'
 
-const mainStore = useMainStore()
+const tabStore = useTabStore()
 const route = useRoute()
 const router = useRouter()
 
 const tabList = computed(() => {
-  return mainStore.getAddTab
+  return tabStore.getAddTab
 })
 //索引
 const activeKey = ref('')
@@ -49,7 +49,7 @@ const addTab = () => {
     path: path,
     title: meta.title as string
   }
-  mainStore.addTab(tab)
+  tabStore.addTab(tab)
 }
 
 // 刷新缓存数据
@@ -61,7 +61,7 @@ const refresh = () => {
   if (session) {
     let tabItem = JSON.parse(session)
     tabItem.forEach((tab: Itab) => {
-      mainStore.addTab(tab)
+      tabStore.addTab(tab)
     })
   }
 }
@@ -95,7 +95,7 @@ const removeTab = (targetName: string) => {
       }
     })
   }
-  mainStore.closeCurrentTab(targetName)
+  tabStore.closeCurrentTab(targetName)
 }
 
 // 右键显示菜单列表
@@ -105,7 +105,7 @@ const top = ref('')
 const openContextMenu = (e: any) => {
   if (e.srcElement.id) {
     let currentContextTabId = e.srcElement.id.split('-')[1]
-    mainStore.saveCurrentContextTabId(currentContextTabId)
+    tabStore.saveCurrentContextTabId(currentContextTabId)
     contextMenuVisible.value = true
     left.value = e.clientX
     top.value = e.clientY + 10
@@ -113,14 +113,14 @@ const openContextMenu = (e: any) => {
 }
 // 关闭所有
 const closeAllTabs = () => {
-  mainStore.closeAllTabs()
+  tabStore.closeAllTabs()
   contextMenuVisible.value = false
   router.push('/index')
 }
 // 关闭其他（选中之外）
 
 const closeOtherTabs = (part: string) => {
-  mainStore.closeOtherTabs(part)
+  tabStore.closeOtherTabs(part)
   contextMenuVisible.value = false
 }
 onMounted(() => {

@@ -1,37 +1,44 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import path from "path"
+import path from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig({
- server:{
-  port:3001
- },
- resolve:{
-  alias:{
-      "@":path.resolve(__dirname,"src"),
-      "com":path.resolve(__dirname,"src/components")
-  }
+  server: {
+    port: 3001,
+    proxy: {
+      '/api': {
+        target: 'http://106.52.235.252:8101/',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   },
-  css:{
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      com: path.resolve(__dirname, 'src/components')
+    }
+  },
+  css: {
     //css预处理
-    preprocessorOptions:{
-      scss:{
+    preprocessorOptions: {
+      scss: {
         //引入varibles.scss全局预定义变量
-        additionalData:`@import "./src/styles/variables.scss";`,
+        additionalData: `@import "./src/styles/variables.scss";`
       }
     }
   },
   plugins: [
     vue(),
     AutoImport({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver()]
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
-    }),
+      resolvers: [ElementPlusResolver()]
+    })
   ]
 })

@@ -1,6 +1,105 @@
+<template>
+  <div class="login-container">
+    <img
+      src="../../assets/login/background.webp"
+      alt=""
+      srcset=""
+      class="bg_img"
+    />
+    <!-- 背景vedio -->
+    <!-- <video poster="@/assets/login/1.jpg" loop autoplay muted>
+      <source src="@/assets/login/Particles.mp4" />
+    </video> -->
+
+    <div class="login-form">
+      <!-- 标题 -->
+      <header>
+        <img src="@/assets/logo.png" />
+        <h3>vue3-admin</h3>
+      </header>
+      <!-- form组件 -->
+      <!-- <el-form :model="loginForm" :rules="loginRules">
+        <el-form-item prop="username">
+          <el-input
+            v-model="loginForm.username"
+            placeholder="username"
+          ></el-input>
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input></el-input>
+        </el-form-item>
+        <el-form-item prop="verifyCode">
+          <el-input></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="">LOGIN</el-button>
+        </el-form-item>
+      </el-form> -->
+
+      <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
+        <el-form-item prop="username">
+          <el-icon>
+            <user />
+          </el-icon>
+          <el-input
+            placeholder="username"
+            v-model="loginForm.username"
+            type="text"
+          />
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-icon>
+            <lock />
+          </el-icon>
+          <el-input
+            placeholder="password"
+            v-model="loginForm.password"
+            type="password"
+          />
+        </el-form-item>
+        <el-form-item prop="verifyCode" class="verify-item">
+          <el-input
+            v-model="loginForm.verifyCode"
+            placeholder="验证码"
+            type="verifyCode"
+            style="
+              margin-left: 10px;
+              width: 40%;
+              height: 40px;
+              display: inline-block;
+              border: 1px solid rgba(255, 255, 255, 0.1);
+            "
+          ></el-input>
+          <div style="margin-left: 10px; display: inline-block; height: 40px">
+            <img
+              :src="codeUrl"
+              @click="getValidCode"
+              alt=" "
+              style="
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                margin-bottom: -12px;
+              "
+            />
+          </div>
+        </el-form-item>
+        <el-form-item style="border: none; background: none">
+          <el-button
+            type="primary"
+            style="width: 100%; margin-bottom: 30px"
+            @click="handleLogin"
+            >登录</el-button
+          >
+        </el-form-item>
+      </el-form>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { User, Lock } from '@element-plus/icons-vue'
-//import {getCode} from '../../api/Auth'
+import { getCode, login } from '../../api/Auth'
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -9,8 +108,9 @@ const router = useRouter()
 const loginFormRef = ref(null)
 
 const loginForm = reactive({
-  username: '',
-  password: '',
+  username: 'admin',
+  password: '123456',
+  uuid: '',
   verifyCode: ''
 })
 
@@ -61,94 +161,29 @@ const loginRules = reactive({
   ]
 })
 // 获取验证码
-/* const getValidCode = () =>{
-
-  getCode().then(result =>{
-      
-    
-      codeUrl.value = result.data.image
-
-     
+const getValidCode = () => {
+  getCode().then((result) => {
+    codeUrl.value = result.data.image
+    loginForm.uuid = result.data.uuid
   })
-} */
+}
 
 // 初始化
-/* onMounted(() => {
+onMounted(() => {
   getValidCode()
-}) */
+})
 
 // 登录事件
 const handleLogin = () => {
-  router.push('/')
+  login(loginForm).then((result) => {
+    console.log(result)
+
+    if (result.data.token) {
+      router.push({ path: '/index' })
+    }
+  })
 }
 </script>
-
-<template>
-  <div class="login-container">
-    <!-- 背景vedio -->
-    <video poster="@/assets/login/1.jpg" loop autoplay muted>
-      <source src="@/assets/login/Particles.mp4" />
-    </video>
-
-    <div class="login-form">
-      <!-- 标题 -->
-      <header>
-        <img src="@/assets/logo.png" />
-        <h3>vue3-admin</h3>
-      </header>
-      <!-- form组件 -->
-      <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
-        <el-form-item prop="username">
-          <el-icon>
-            <user />
-          </el-icon>
-          <el-input
-            placeholder="username"
-            v-model="loginForm.username"
-            type="text"
-          />
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-icon>
-            <lock />
-          </el-icon>
-          <el-input
-            placeholder="password"
-            v-model="loginForm.password"
-            type="password"
-          />
-        </el-form-item>
-        <el-form-item prop="verifyCode" class="verify-item">
-          <el-input
-            v-model="loginForm.verifyCode"
-            placeholder="验证码"
-            type="verifyCode"
-            style="
-              margin-left: 10px;
-              width: 40%;
-              height: 40px;
-              display: inline-block;
-              border: 1px solid rgba(255, 255, 255, 0.1);
-            "
-          ></el-input>
-          <div style="margin-left: 10px; display: inline-block; height: 40px">
-            <!-- <img :src="codeUrl" @click="getValidCode" alt=" " 
-              style="width: 100%;height:100%;object-fit: cover; margin-bottom: -12px;"
-             /> -->
-          </div>
-        </el-form-item>
-        <el-form-item style="border: none; background: none">
-          <el-button
-            type="primary"
-            style="width: 100%; margin-bottom: 30px"
-            @click="handleLogin"
-            >登录</el-button
-          >
-        </el-form-item>
-      </el-form>
-    </div>
-  </div>
-</template>
 
 <style lang="scss">
 // 隐藏滚动条
@@ -178,12 +213,25 @@ const handleLogin = () => {
     object-fit: fill;
     z-index: -1;
   }
+  .bg_img {
+    position: absolute;
+    /* Vertical and Horizontal center*/
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    z-index: -1;
+  }
   .login-form {
     width: 400px;
     height: 380px;
     padding: 4vh;
     margin: 20px;
-    background: url('@/assets/login/login_form.png');
+    //background: url('@/assets/login/login_form.png');
+    background-color: #fff;
     background-size: 100% 100%;
     border-radius: 10px;
     box-shadow: 0 2px 8px 0 rgba(7, 17, 27, 0.06);
@@ -210,6 +258,7 @@ const handleLogin = () => {
       display: inline-block;
       height: 44px;
       width: 85%;
+      background-color: n;
 
       input {
         height: 44px;
@@ -227,13 +276,16 @@ const handleLogin = () => {
           -webkit-text-fill-color: #fff !important;
         }
       }
+      .el-input__wrapper {
+        display: flex;
+      }
     }
 
     .el-form-item {
       display: flex;
       flex-wrap: nowrap;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(0, 0, 0, 0.1);
+      //background: rgba(0, 0, 0, 0.1);
       border-radius: 5px;
       color: #454545;
       padding-left: 10px;
