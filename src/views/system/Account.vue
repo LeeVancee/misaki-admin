@@ -23,7 +23,17 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-
+    <!-- 角色表单 -->
+    <el-dialog title="设置角色" v-model="state.showAuthorizeDialog">
+      <el-select placeholder="选择角色" @change="upRole">
+        <el-option
+          v-for="item in roles"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        ></el-option>
+      </el-select>
+    </el-dialog>
     <!-- 系统用户表格 -->
     <div style="margin: 0 10px; text-align: left">
       <el-table
@@ -50,8 +60,12 @@
         <el-table-column label="操作" width="300px">
           <template #default="scope">
             <div class="btn">
-              <el-button size="small">授权</el-button>
-              <el-button size="small">重置密码</el-button>
+              <el-button size="small" @click="authorize(scope.row.id)"
+                >授权</el-button
+              >
+              <el-button size="small" @click="resetPwd(scope.row.id)"
+                >重置密码</el-button
+              >
               <el-button size="small" @click="toEditUser(scope.row)"
                 >编辑</el-button
               >
@@ -88,7 +102,7 @@ import {
   setRole
 } from '@/api/system/user'
 import { getAllRoles } from '@/api/system/role'
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, Ref } from 'vue'
 import { ComponentInternalInstance, getCurrentInstance, ref } from 'vue'
 import 'element-plus/es/components/message-box/style/css'
 import 'element-plus/es/components/notification/style/css'
@@ -111,7 +125,9 @@ const state = reactive({
       }
     ]
   },
-  formTitle: ''
+  formTitle: '',
+  showAuthorizeDialog: false,
+  currentId: 0
 })
 const value1 = ref(true)
 //新增用户
@@ -172,6 +188,37 @@ const commitStatusChange = (value: boolean, user: User) => {
     updateStatus(user.id, user.status).then(() => {
       proxy.$Notify.success(value === false ? '冻结用户' : '激活用户')
     })
+  })
+}
+// 重置密码
+const resetPwd = (userId: number) => {
+  proxy?.$confirm('确认重置该用户密码').then(() => {
+    resetPassword(userId).then(() => {
+      proxy?.$Notify.success('密码重置成功')
+    })
+  })
+}
+//设置角色
+interface Role {
+  id: number
+  name: string
+}
+const roles: Ref<Array<Role> | null> = ref(null)
+const authorize = (userId: number) => {
+  getAllRoles().then((result) => {
+    roles.value = result.data
+    state.currentId = userId
+    state.showAuthorizeDialog = true
+  })
+}
+// 确认设置角色
+const upRole = (roleId: number) => {
+  setRole(state.currentId, roleId).then((result) => {
+    if (result.data == 1) {
+      proxy?.$Notify.success('设置成功')
+      getUsers()
+      state.showAuthorizeDialog = false
+    }
   })
 }
 
