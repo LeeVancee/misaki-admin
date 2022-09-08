@@ -4,6 +4,20 @@ const axiosInstance = axios.create({
   baseURL: '/api'
 })
 
+// request拦截器
+axiosInstance.interceptors.request.use(
+  (requestInfo) => {
+    if (requestInfo.headers) {
+      requestInfo.headers['token'] = localStorage.getItem('token') || '0'
+      requestInfo.headers['Content-Type'] = 'application/json;charset=UTF-8'
+      return requestInfo
+    }
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
+
 // response 拦截器
 axiosInstance.interceptors.response.use((response) => {
   const res = response.data

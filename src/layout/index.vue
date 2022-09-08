@@ -8,7 +8,7 @@
       <el-container>
         <el-header>
           <el-row
-            gutter="24"
+            :gutter="24"
             style="width: 100%; display: flex; align-items: center"
           >
             <!-- 侧边栏按钮 -->

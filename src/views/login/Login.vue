@@ -103,6 +103,7 @@ import { getCode, login } from '../../api/Auth'
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../../store/authStore'
+import { getAllSysUsers } from '@/api/system/user'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -180,7 +181,7 @@ onMounted(() => {
 const handleLogin = () => {
   authStore.login(loginForm)
 
-  //router.push({ path: '/index' })
+  router.push({ path: '/index' })
 }
 
 // token登录

@@ -199,12 +199,10 @@ router.beforeEach((to, from, next) => {
     if (to.path.startsWith('/login')) {
       next()
     } else {
-      console.log('还没登录！')
       next('/login')
     }
-  } else if (authStore.token && token) {
+  } else if (!authStore.token && token) {
     loginByToken(token).then((res) => {
-      console.log(res)
       if (res.data.status) {
         authStore.addUserInfo(res.data)
         next()
@@ -214,4 +212,32 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+
+/* router.beforeEach((to,from,next)=>{
+  const authStore = useAuthStore()
+  const token = localStorage.getItem('token')
+  if(!store.state.authStore.token && !token) {
+      if(to.path.startsWith('/login'))
+      next()
+      else {
+        next('/login')
+      }
+  } else if(!store.state.authStore.token && token) {
+    loginByToken(token).then(res=>{
+      if(res.data.status) {
+       store.commit('authStore/addUserInfo',res.data)
+        
+
+        next()
+      } else{
+        next('/login')
+      }
+
+    })
+
+  } else {
+    next()
+  }
+}) */
+
 export default router

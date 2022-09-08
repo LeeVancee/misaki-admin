@@ -50,5 +50,12 @@ const handleLogout = () => {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+
+    border: solid 1px black;
+  }
 }
 </style>
