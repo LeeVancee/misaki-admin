@@ -7,13 +7,21 @@
       </el-aside>
       <el-container>
         <el-header>
-          <el-row>
+          <el-row
+            gutter="24"
+            style="width: 100%; display: flex; align-items: center"
+          >
             <!-- 侧边栏按钮 -->
-            <el-icon size="26px" style="margin-right: 15px" @click="click">
-              <component :is="collapsed ? Expand : Fold" />
-            </el-icon>
-            <header-bar />
-            <el-col></el-col>
+            <el-col :span="1">
+              <el-icon size="26px" style="margin-right: 15px" @click="click">
+                <component :is="collapsed ? Expand : Fold" />
+              </el-icon>
+            </el-col>
+            <!-- header业务 -->
+
+            <el-col :span="23">
+              <header-bar />
+            </el-col>
           </el-row>
         </el-header>
         <el-main>
@@ -33,7 +41,7 @@ import menuBar from './components/menuBar/index.vue'
 import AppMain from './components/appMain/AppMain.vue'
 import { Expand, Fold } from '@element-plus/icons-vue'
 import HeaderBar from './components/headerBar/index.vue'
-import TabBar from './tabBar/TabBar.vue'
+import TabBar from './components/tabBar/TabBar.vue'
 import { isMobile } from '../untils/isMobile'
 
 const collapsed = ref(false)
@@ -63,7 +71,7 @@ const autoWidth = computed(() => {
     background-color: #b3c0d1;
     color: var(--el-text-color-primary);
     text-align: center;
-    line-height: 60px;
+    //line-height: 60px;
   }
 
   .el-footer {

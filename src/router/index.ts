@@ -206,6 +206,7 @@ router.beforeEach((to, from, next) => {
     loginByToken(token).then((res) => {
       console.log(res)
       if (res.data.status) {
+        authStore.addUserInfo(res.data)
         next()
       }
     })

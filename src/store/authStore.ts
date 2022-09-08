@@ -42,6 +42,9 @@ export const useAuthStore = defineStore('auth', {
         .catch(() => {
           localStorage.removeItem('token')
         })
+    },
+    addUserInfo(userInfo: UserType) {
+      this.userInfo = userInfo
     }
   }
 })
