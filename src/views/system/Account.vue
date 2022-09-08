@@ -43,6 +43,7 @@
               v-model="scope.row.status"
               active-color="green"
               inactive-color="red"
+              @change="(value:boolean)=>commitStatusChange(value,scope.row)"
             />
           </template>
         </el-table-column>
@@ -157,6 +158,19 @@ const deleteUser = (id: number) => {
         title: '删除成功',
         duration: 500
       })
+    })
+  })
+}
+
+// 更新用户状态
+interface User {
+  id: number
+  status: boolean
+}
+const commitStatusChange = (value: boolean, user: User) => {
+  proxy?.$confirm(value === false ? '冻结用户' : '激活用户').then(() => {
+    updateStatus(user.id, user.status).then(() => {
+      proxy.$Notify.success(value === false ? '冻结用户' : '激活用户')
     })
   })
 }
