@@ -130,6 +130,14 @@ const state = reactive({
   currentId: 0
 })
 const value1 = ref(true)
+//获取系统用户
+const getUsers = () => {
+  getAllSysUsers().then((result) => {
+    console.log(result)
+    state.users = result.data
+    console.log(state.users)
+  })
+}
 //新增用户
 const toAddUser = () => {
   state.formTitle = '添加用户'
@@ -222,14 +230,6 @@ const upRole = (roleId: number) => {
   })
 }
 
-//获取系统用户
-const getUsers = () => {
-  getAllSysUsers().then((result) => {
-    console.log(result)
-    state.users = result.data
-    console.log(state.users)
-  })
-}
 // 改变页
 const handleCurrentChange = (value: number) => {
   state.currentPage = value

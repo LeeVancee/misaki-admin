@@ -38,6 +38,7 @@ declare module 'vue' {
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
+    ElTree: typeof import('element-plus/es')['ElTree']
     SetupScript: typeof import('./src/components/SetupScript.vue')['default']
     SlotsAttrs: typeof import('./src/components/SlotsAttrs.vue')['default']
   }
