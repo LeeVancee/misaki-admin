@@ -36,12 +36,27 @@
       </el-form>
     </el-dialog>
     <!-- 角色授权弹窗 -->
-    <el-dialog title="角色授权" v-model="state.permissionVisible">
-      <el-tree
-        :data="state.permissionTree"
-        show-checkbox
-        :props="state.defaultProps"
-      ></el-tree>
+    <el-dialog
+      title="角色授权"
+      v-model="state.permissionVisible"
+      destroy-on-close
+    >
+      <el-form>
+        <el-form-item label="">
+          <el-tree
+            :data="state.permissionTree"
+            show-checkbox
+            :props="state.defaultProps"
+            node-key="permission"
+            :default-checked-keys="state.permissons"
+            ref="permissionRef"
+          ></el-tree>
+        </el-form-item>
+        <el-form-item label="">
+          <el-button type="" @click="resetChecked">清空</el-button>
+          <el-button type="primary" @click="setPermission">确认</el-button>
+        </el-form-item>
+      </el-form>
     </el-dialog>
     <!-- 角色表 -->
     <div style="margin: 5px 10px; text-align: left">
@@ -50,7 +65,9 @@
         <el-table-column prop="description" label="描述"></el-table-column>
         <el-table-column prop="" label="操作">
           <template #default="scope">
-            <el-button type="" @click="toPermissions">授权</el-button>
+            <el-button type="" @click="toPermissions(scope.row)"
+              >授权</el-button
+            >
             <el-button type="" @click="edit(scope.row)">编辑</el-button>
             <el-button type="" @click="delRoles(scope.row.id)">删除</el-button>
           </template>
@@ -71,18 +88,20 @@ import {
 } from '@/api/system/role'
 import { onMounted, reactive } from 'vue'
 import { ComponentInternalInstance, getCurrentInstance, ref } from 'vue'
+import type { ElTree } from 'element-plus'
 import permissionTree from '@/router/permissionTree'
 import 'element-plus/es/components/message-box/style/css'
 import 'element-plus/es/components/notification/style/css'
 // 添加断言
 const { proxy } = getCurrentInstance() as ComponentInternalInstance
-
+const permissionRef = ref<InstanceType<typeof ElTree>>()
 const state = reactive({
   roles: [],
   formTitle: '',
   dialogVisible: false,
   permissionVisible: false,
   permissionTree,
+  permissons: [],
   defaultProps: {
     id: 'title',
     label: 'title',
@@ -156,8 +175,35 @@ const delRoles = (id: number) => {
     .catch(() => {})
 }
 // 授权
-const toPermissions = () => {
+const toPermissions = (selectRole: any) => {
+  state.permissons = []
+  state.formData = JSON.parse(JSON.stringify(selectRole))
   state.permissionVisible = true
+  getPermissionsOfRole(selectRole.id).then((result) => {
+    state.permissons = result.data
+  })
+}
+// 清空checkedbox
+const resetChecked = () => {
+  permissionRef.value!.setCheckedKeys([], false)
+}
+//确认权限树节点
+const setPermission = () => {
+  let nodes = permissionRef.value!.getCheckedNodes(false, false)
+  let permissions: InstanceType<typeof ElTree>[] = []
+  nodes.forEach((node) => {
+    if (node.permision) {
+      permissions.push(node.permision)
+    }
+  })
+  let vo = {
+    roleId: state.formData.id,
+    permissions: permissions
+  }
+  updateRolePermission(vo).then(() => {
+    state.permissionVisible = false
+    proxy?.$Notify.success('修改成功')
+  })
 }
 onMounted(() => {
   _getAllRoles()
