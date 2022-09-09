@@ -20,6 +20,7 @@ export const useButtonStore = defineStore('button', {
         }
       })
       this.buttonList = bList
+      console.log(bList)
     }
   }
 })

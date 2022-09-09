@@ -1,8 +1,9 @@
 <template>
   <div>
     <el-breadcrumb>
+      <el-breadcrumb-item>{{ $t('menus.wIndex') }}</el-breadcrumb-item>
       <el-breadcrumb-item v-for="(item, index) in breadcrumb" :key="index">{{
-        item.meta.title
+        $t(item.meta.title)
       }}</el-breadcrumb-item>
     </el-breadcrumb>
   </div>
@@ -21,10 +22,8 @@ const getBreadCrumb = () => {
   )
   //拿到第一条数据
   const first = matched[0]
-  if (first.path !== '/index') {
-    matched = [{ path: 'index', meta: { title: '首页' } } as any].concat(
-      matched
-    )
+  if (first.path == '/index') {
+    matched = []
   }
 
   breadcrumb.value = matched

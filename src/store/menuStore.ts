@@ -51,7 +51,7 @@ export const useMenuStore = defineStore('menu', {
       routers.forEach((route) => {
         // 二级菜单跳成一级
         if (route.children?.length === 1) {
-          route.redirect = route.path + '/' + route.children[0].path
+          route.redirect = null || route.path + '/' + route.children[0].path
           route.meta = route.children[0].meta
         }
         router.addRoute(route)

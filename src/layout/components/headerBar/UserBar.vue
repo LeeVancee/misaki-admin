@@ -46,6 +46,7 @@ const handleLogout = () => {
 
 <style lang="scss" scoped>
 .userInfo {
+  width: 150px;
   display: flex;
   flex-direction: row;
   align-items: center;

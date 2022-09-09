@@ -4,16 +4,18 @@ import router from './router'
 import { createPinia } from 'pinia'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import * as ElementUI from 'element-plus'
+import { useButtonStore } from './store/buttonStore'
+import i18n from './i18n'
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
-app.use(router).use(createPinia()).mount('#app')
+app.use(router).use(createPinia()).use(i18n).mount('#app')
 app.directive('btn', {
   mounted(el, binding) {
-    let buttonList = ['a', 'b']
-    if (!buttonList.includes(binding.value)) {
+    const buttonStore = useButtonStore()
+    if (!buttonStore.buttonList.includes(binding.value)) {
       el.parentNode.removeChild(el)
     }
   }
