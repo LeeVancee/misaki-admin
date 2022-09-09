@@ -3,6 +3,7 @@ import Layout from '@/layout/index.vue'
 import { loginByToken } from '@/api/Auth'
 import { useAuthStore } from '@/store/authStore'
 import { useMenuStore } from '@/store/menuStore'
+import { useButtonStore } from '@/store/buttonStore'
 
 //声明meta类型
 declare module 'vue-router' {
@@ -203,6 +204,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
   const menuStore = useMenuStore()
+  const buttonStore = useButtonStore()
   const token = localStorage.getItem('token')
   if (!authStore.token && !token) {
     if (to.path.startsWith('/login')) {
@@ -215,6 +217,7 @@ router.beforeEach((to, from, next) => {
       if (res.data.status) {
         authStore.addUserInfo(res.data)
         menuStore.generateSystemMenus(res.data.permissions)
+        buttonStore.generateButtons(res.data.permissions)
         if (to.matched.length == 0) {
           router.push(to.path)
         }

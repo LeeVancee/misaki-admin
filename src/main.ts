@@ -10,6 +10,14 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 app.use(router).use(createPinia()).mount('#app')
+app.directive('btn', {
+  mounted(el, binding) {
+    let buttonList = ['a', 'b']
+    if (!buttonList.includes(binding.value)) {
+      el.parentNode.removeChild(el)
+    }
+  }
+})
 
 // 声明全局变量属性
 declare module 'vue' {
