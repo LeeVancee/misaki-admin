@@ -9,6 +9,7 @@ specifiers:
   i18n: ^0.15.0
   pinia: ^2.0.22
   sass: ^1.54.8
+  screenfull: ^6.0.2
   typescript: ^4.4.4
   unplugin-auto-import: ^0.5.11
   unplugin-vue-components: ^0.17.21
@@ -26,6 +27,7 @@ dependencies:
   i18n: registry.npmmirror.com/i18n/0.15.0
   pinia: registry.npmmirror.com/pinia/2.0.22_pj7ch6rmow6odq73xb5hfvge3q
   sass: registry.npmmirror.com/sass/1.54.8
+  screenfull: registry.npmmirror.com/screenfull/6.0.2
   vue: registry.npmmirror.com/vue/3.2.38
   vue-i18n: registry.npmmirror.com/vue-i18n/9.2.2_vue@3.2.38
   vue-router: registry.npmmirror.com/vue-router/4.1.5_vue@3.2.38
@@ -1705,6 +1707,13 @@ packages:
       chokidar: registry.npmmirror.com/chokidar/3.5.3
       immutable: registry.npmmirror.com/immutable/4.1.0
       source-map-js: registry.npmmirror.com/source-map-js/1.0.2
+
+  registry.npmmirror.com/screenfull/6.0.2:
+    resolution: {integrity: sha512-AQdy8s4WhNvUZ6P8F6PB21tSPIYKniic+Ogx0AacBMjKP1GUHN2E9URxQHtCusiwxudnCKkdy4GrHXPPJSkCCw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/screenfull/-/screenfull-6.0.2.tgz}
+    name: screenfull
+    version: 6.0.2
+    engines: {node: ^14.13.1 || >=16.0.0}
+    dev: false
 
   registry.npmmirror.com/semver/7.3.7:
     resolution: {integrity: sha512-QlYTucUYOews+WeEujDoEGziz4K6c47V/Bd+LjSSYcA94p+DmINdf7ncaUinThfvZyu13lN9OY1XDxt8C0Tw0g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/semver/-/semver-7.3.7.tgz}
