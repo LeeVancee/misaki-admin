@@ -13,14 +13,17 @@
 <script lang="ts" setup>
 import { reactive } from 'vue'
 import MenuItem from './MenuItem.vue'
+import { useMenuStore } from '@/store/menuStore'
 
 defineProps({
   collapsed: {
     type: Boolean
   }
 })
+const menuStore = useMenuStore()
+const menus = menuStore.getMenus
 
-const menus = reactive([
+/* const menus = reactive([
   {
     path: '/',
     redirect: '/index',
@@ -193,7 +196,7 @@ const menus = reactive([
       }
     ]
   }
-])
+]) */
 </script>
 
 <style lang="scss">

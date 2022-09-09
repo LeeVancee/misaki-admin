@@ -2,8 +2,16 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import Layout from '@/layout/index.vue'
 import { loginByToken } from '@/api/Auth'
 import { useAuthStore } from '@/store/authStore'
-//import pinia from '@/store'
+import { useMenuStore } from '@/store/menuStore'
 
+//声明meta类型
+declare module 'vue-router' {
+  interface RouteMeta {
+    title: string
+    icon: string
+    permission: string
+  }
+}
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
@@ -194,6 +202,7 @@ const router = createRouter({
 })
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
+  const menuStore = useMenuStore()
   const token = localStorage.getItem('token')
   if (!authStore.token && !token) {
     if (to.path.startsWith('/login')) {
@@ -205,6 +214,10 @@ router.beforeEach((to, from, next) => {
     loginByToken(token).then((res) => {
       if (res.data.status) {
         authStore.addUserInfo(res.data)
+        menuStore.generateSystemMenus(res.data.permissions)
+        if (to.matched.length == 0) {
+          router.push(to.path)
+        }
         next()
       }
     })

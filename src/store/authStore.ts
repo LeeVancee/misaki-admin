@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { UserType } from './type'
 import { login, loginByToken } from '@/api/Auth'
+import { useMenuStore } from './menuStore'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -29,6 +30,8 @@ export const useAuthStore = defineStore('auth', {
         this.userInfo = result.data
         this.token = result.data.token
         localStorage.setItem('token', result.data.token)
+        const menuStore = useMenuStore()
+        menuStore.generateSystemMenus(result.data.permissions)
       })
     },
     //token登录
@@ -38,6 +41,8 @@ export const useAuthStore = defineStore('auth', {
         .then((result) => {
           this.userInfo = result.data
           localStorage.setItem('token', result.data.token)
+          const menuStore = useMenuStore()
+          menuStore.generateSystemMenus(result.data.permissions)
         })
         .catch(() => {
           localStorage.removeItem('token')
