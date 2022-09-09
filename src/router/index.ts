@@ -8,8 +8,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     component: () => import('@/views/login/Login.vue')
-  },
-  {
+  }
+  /* {
     path: '/',
     redirect: '/index',
     name: 'Index',
@@ -185,7 +185,7 @@ const routes: Array<RouteRecordRaw> = [
         }
       }
     ]
-  }
+  } */
 ]
 
 const router = createRouter({
@@ -212,32 +212,5 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
-
-/* router.beforeEach((to,from,next)=>{
-  const authStore = useAuthStore()
-  const token = localStorage.getItem('token')
-  if(!store.state.authStore.token && !token) {
-      if(to.path.startsWith('/login'))
-      next()
-      else {
-        next('/login')
-      }
-  } else if(!store.state.authStore.token && token) {
-    loginByToken(token).then(res=>{
-      if(res.data.status) {
-       store.commit('authStore/addUserInfo',res.data)
-        
-
-        next()
-      } else{
-        next('/login')
-      }
-
-    })
-
-  } else {
-    next()
-  }
-}) */
 
 export default router
