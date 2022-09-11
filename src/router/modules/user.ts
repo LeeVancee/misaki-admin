@@ -1,6 +1,6 @@
 import Layout from '@/layout/index.vue'
 import {RouteRecordRaw} from 'vue-router'
-import i18n from '@/i18n'
+
 
 const userRouter:RouteRecordRaw = {
     path: '/user',
@@ -21,6 +21,7 @@ const userRouter:RouteRecordRaw = {
           title: 'menus.wUserManger',
           icon:'UserFilled',
           permission: "system:user",
+          index:1
         },
         
       },

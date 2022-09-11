@@ -1,9 +1,9 @@
 <!--  -->
 <template>
-  <div>User</div>
+  <div>
+    <div>User</div>
+  </div>
 </template>
 
-<script setup lang='ts'>
-</script>
-<style lang='scss' scoped>
-</style>
+<script setup lang="ts"></script>
+<style lang="scss" scoped></style>

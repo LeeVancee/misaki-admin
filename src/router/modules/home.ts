@@ -19,7 +19,8 @@ const homeRouter: RouteRecordRaw = {
       meta: {
         title: 'menus.wIndex',
         icon: 'house',
-        permission: 'system:index'
+        permission: 'system:index',
+        index: 0
       }
     }
   ]
